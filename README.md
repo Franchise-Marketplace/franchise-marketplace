@@ -30,7 +30,7 @@ The website connects business owners with investors, enabling effective expansio
 - **IDE**: VS Code (v1.61)
 - **Framework**: Laravel (v9.0)
 - **PHP Version**: 8.1
-- **Web Server**: Apache 2.4
+- **Web Server**: Apache 2.4 (via XAMPP)
 - **Database**: MySQL 8.0
 
 ---
@@ -145,24 +145,39 @@ Powered by **Laravel**, the back end ensures robust authentication, database man
 ---
 
 ## **Getting Started**
+
 ### **Installation**
-1. Clone the repository:
+
+1. Install XAMPP and ensure Apache and MySQL are running via the XAMPP Control Panel.
+2. Clone the repository into the `htdocs` directory:
    ```bash
-   git clone <repository-url>
+   git clone <repository-url> C:\xampp\htdocs\franchise-directory
    ```
-2. Install dependencies:
+3. Navigate to the project directory in PowerShell or Command Prompt:
    ```bash
-   composer install
+   cd C:\xampp\htdocs\franchise-directory
+   ```
+4. Install dependencies using XAMPP’s PHP:
+   ```bash
+   C:\xampp\php\php.exe composer install
    npm install
    ```
-3. Set up the environment file:
+5. Set up the environment file:
    ```bash
    cp .env.example .env
    ```
-   Update database credentials in the `.env` file.
-4. Run database migrations:
+   Update database credentials in the `.env` file:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+6. Run database migrations:
    ```bash
-   php artisan migrate
+   C:\xampp\php\php.exe artisan migrate
    ```
    if using xampp on windows 
 
@@ -170,8 +185,11 @@ Powered by **Laravel**, the back end ensures robust authentication, database man
    C:\xampp\php\php.exe artisan migrate
    ```
 5. Start the development server:
+7. Serve the application using XAMPP's Apache server:
+   - Ensure Apache’s document root points to the `public` directory of the Laravel project, or access via `http://localhost/franchise-directory/public`.
+
+8. Build assets for the front end:
    ```bash
-   php artisan serve
    npm run dev
    ```
   if using xampp on windows 
@@ -180,8 +198,10 @@ Powered by **Laravel**, the back end ensures robust authentication, database man
    C:\xampp\php\php.exe serve
    ```
 
+---
+
 ### **Usage**
-- Access the application at `http://localhost:8000`.
+- Access the application via your browser at `http://localhost/franchise-directory/public`.
 - Login or register as a franchisor or franchisee to explore the platform.
 
 ---

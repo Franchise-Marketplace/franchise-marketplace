@@ -164,10 +164,20 @@ Powered by **Laravel**, the back end ensures robust authentication, database man
    ```bash
    php artisan migrate
    ```
+   if using xampp on windows 
+
+   ```powershell
+   C:\xampp\php\php.exe artisan migrate
+   ```
 5. Start the development server:
    ```bash
    php artisan serve
    npm run dev
+   ```
+  if using xampp on windows 
+
+   ```powershell
+   C:\xampp\php\php.exe serve
    ```
 
 ### **Usage**

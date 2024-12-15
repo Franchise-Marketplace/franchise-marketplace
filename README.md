@@ -185,6 +185,12 @@ Powered by **Laravel**, the back end ensures robust authentication, database man
    C:\xampp\php\php.exe artisan migrate
    ```
 5. Start the development server:
+  
+  if using xampp on windows 
+
+   ```powershell
+   C:\xampp\php\php.exe artisan serve
+   ```
 7. Serve the application using XAMPP's Apache server:
    - Ensure Apache’s document root points to the `public` directory of the Laravel project, or access via `http://localhost/franchise-directory/public`.
 
@@ -192,12 +198,6 @@ Powered by **Laravel**, the back end ensures robust authentication, database man
    ```bash
    npm run dev
    ```
-  if using xampp on windows 
-
-   ```powershell
-   C:\xampp\php\php.exe serve
-   ```
-
 ---
 
 ### **Usage**

@@ -49,6 +49,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        if ($user->user_role == 'franchisor') {
+            return redirect(route('dashboard', absolute: false));
+        }
+        if ($user->user_role == 'franchisee') {
+            return redirect(route('franchiseeDashboard', absolute: false));
+        }
     }
 }

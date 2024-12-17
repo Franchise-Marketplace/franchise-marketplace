@@ -11,7 +11,11 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        user_role: '',
+        terms: true,
     });
+
+    const userRoles = ['franchisor', 'franchisee'];
 
     const submit = (e) => {
         e.preventDefault();
@@ -42,7 +46,6 @@ export default function Register() {
 
                     <InputError message={errors.name} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -59,7 +62,31 @@ export default function Register() {
 
                     <InputError message={errors.email} className="mt-2" />
                 </div>
+                <div className="pt-4">
+                    <InputLabel htmlFor="user_role" value="User Role" />
 
+                    <div className="mt-2 space-y-2 pl-5">
+                        {userRoles.map((role, index) => (
+                            <label key={index} className="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="user_role"
+                                    value={role}
+                                    checked={data.user_role === role}
+                                    onChange={(e) =>
+                                        setData('user_role', e.target.value)
+                                    }
+                                    className="form-radio text-indigo-600"
+                                />
+                                <span className="ml-2 text-sm text-gray-700">
+                                    {role}
+                                </span>
+                            </label>
+                        ))}
+                    </div>
+
+                    <InputError message={errors.user_role} className="mt-2" />
+                </div>
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="Password" />
 
@@ -76,7 +103,6 @@ export default function Register() {
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
@@ -101,7 +127,6 @@ export default function Register() {
                         className="mt-2"
                     />
                 </div>
-
                 <div className="mt-4 flex items-center justify-end">
                     <Link
                         href={route('login')}

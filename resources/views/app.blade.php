@@ -10,6 +10,17 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <style>
+            body.loading {
+                background-color: white;
+                overflow: hidden; 
+            }
+
+            #app {
+                display: none; 
+            }
+        </style>
+
         <!-- Scripts -->
         @routes
         @viteReactRefresh
@@ -19,4 +30,11 @@
     <body class="font-sans antialiased">
         @inertia
     </body>
+
+    <script>
+        window.addEventListener('load', () => {
+            document.body.classList.remove('loading');
+            document.getElementById('app').style.display = 'block';
+        });
+    </script>
 </html>

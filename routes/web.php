@@ -24,7 +24,7 @@ Route::get('/franchiseeDashboard', function () {
 
 Route::get("/", function (){
     return Inertia::render('HomePage');
-});
+})->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

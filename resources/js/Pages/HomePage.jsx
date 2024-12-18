@@ -43,6 +43,41 @@ export default function HomePage() {
         },
     ];
 
+    const services = [
+        {
+            image: '',
+            service_name: 'Pets Service',
+        },
+        {
+            image: '',
+            service_name: 'Resturant & Fast Food',
+        },
+        {
+            image: '',
+            service_name: 'Professional & Consulting',
+        },
+        {
+            image: '',
+            service_name: 'Sport & Fitness',
+        },
+        {
+            image: '',
+            service_name: 'Care',
+        },
+        {
+            image: '',
+            service_name: 'Kids Club',
+        },
+        {
+            image: '',
+            service_name: 'Van Based',
+        },
+        {
+            image: '',
+            service_name: 'Home Services',
+        },
+    ];
+
     return (
         <>
             <Header />
@@ -77,6 +112,24 @@ export default function HomePage() {
                                     </div>
                                 </div>
                             </>
+                        );
+                    })}
+                </div>
+                <h2 className="mb-8 text-center text-4xl font-semibold">
+                    Franchise by Industry
+                </h2>
+                <div className="franchise_by_industry_container mb-8 flex flex-wrap justify-around">
+                    {services.map((service) => {
+                        return (
+                            <div className="lists align relative mb-12 flex h-40 w-96 flex-col rounded bg-[url('images/BF-Magazine-Logo-REV-2.png')] shadow-xl">
+                                <h3 className="z-10 text-center">
+                                    {service.service_name}
+                                </h3>
+                                <div className="absolute inset-0 bg-gradient-to-b from-slate-200 via-transparent to-slate-100 opacity-70"></div>
+                                <p className="absolute bottom-0 flex w-full cursor-pointer items-end justify-center rounded-b-sm bg-blue-200 py-2 opacity-70">
+                                    View Category
+                                </p>
+                            </div>
                         );
                     })}
                 </div>

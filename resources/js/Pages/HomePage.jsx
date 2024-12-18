@@ -1,3 +1,4 @@
+import Footer from '@/Layouts/Footer';
 import Header from '@/Layouts/Header';
 import Hero from '@/Layouts/Hero';
 
@@ -25,6 +26,7 @@ export default function HomePage() {
                 </ul>
             </nav>
             <Hero />
+            <Footer />
         </>
     );
 }

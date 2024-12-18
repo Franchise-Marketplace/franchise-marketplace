@@ -118,10 +118,10 @@ export default function HomePage() {
                 <h2 className="mb-8 text-center text-4xl font-semibold">
                     Franchise by Industry
                 </h2>
-                <div className="franchise_by_industry_container mb-8 flex flex-wrap justify-around">
+                <div className="franchise_by_industry_container mb-8 flex flex-wrap justify-center gap-x-7">
                     {services.map((service) => {
                         return (
-                            <div className="lists align relative mb-12 flex h-40 w-96 flex-col rounded bg-[url('images/BF-Magazine-Logo-REV-2.png')] shadow-xl">
+                            <div className="lists relative mb-12 flex h-40 w-1/5 flex-col rounded bg-[url('images/BF-Magazine-Logo-REV-2.png')] shadow-xl">
                                 <h3 className="z-10 text-center">
                                     {service.service_name}
                                 </h3>

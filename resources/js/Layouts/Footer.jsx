@@ -15,7 +15,7 @@ export default function Footer() {
                 </button>
             </div>
 
-            <div className="mb-24 ml-36 mt-20 grid grid-cols-[4fr_2fr_2fr] items-start gap-4">
+            <div className="mb-10 ml-36 mt-20 grid grid-cols-[4fr_2fr_2fr] items-start gap-4">
                 <p className="text-xl font-bold text-blue-500">
                     Franchise Marketplace is a trading name of Connect
                     <br /> Digital Solutions Ltd.

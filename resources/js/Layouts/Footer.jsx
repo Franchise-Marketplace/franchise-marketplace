@@ -6,10 +6,10 @@ export default function Footer() {
     return (
         <>
             <div className="flex items-center justify-center space-x-[1rem]">
-                <button className="w-[12em] rounded bg-blue-800 px-4 py-2 text-white hover:bg-blue-700">
+                <button className="w-[12em] rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700">
                     Join Our Newsletter
                 </button>
-                <button className="flex w-[12em] items-center justify-start rounded bg-blue-800 px-4 py-2 text-white hover:bg-blue-700">
+                <button className="flex w-[12em] items-center justify-start rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700">
                     <span>Click To Subscribe</span>
                     <span className="ml-2">➤</span>
                 </button>
@@ -50,19 +50,19 @@ export default function Footer() {
             <div className="ml-36">
                 <ul className="flex space-x-4">
                     <li>
-                        <div className="flex cursor-pointer items-center justify-center rounded-full bg-blue-600 p-3 text-white">
+                        <div className="flex cursor-pointer items-center justify-center rounded-full bg-blue-500 p-3 text-white hover:bg-blue-700">
                             <FaFacebookF className="text-lg" />
                         </div>
                     </li>
 
                     <li>
-                        <div className="flex cursor-pointer items-center justify-center rounded-full bg-pink-500 p-3 text-white">
+                        <div className="flex cursor-pointer items-center justify-center rounded-full bg-pink-500 p-3 text-white hover:bg-pink-700">
                             <FaInstagram className="text-lg" />
                         </div>
                     </li>
 
                     <li>
-                        <div className="flex cursor-pointer items-center justify-center rounded-full bg-blue-400 p-3 text-white">
+                        <div className="flex cursor-pointer items-center justify-center rounded-full bg-blue-500 p-3 text-white hover:bg-blue-700">
                             <FaX className="text-lg" />
                         </div>
                     </li>

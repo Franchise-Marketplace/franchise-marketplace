@@ -114,7 +114,7 @@ export default function Hero() {
                                 </option>
                             </select>
                         </div>
-                        <button class="rounded bg-blue-500 px-8 py-2 font-bold text-white hover:bg-blue-700">
+                        <button className="rounded bg-blue-500 px-8 py-2 font-bold text-white hover:bg-blue-700">
                             Search
                         </button>
                     </div>

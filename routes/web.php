@@ -18,6 +18,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/franchiseeDashboard', function () {
+    return Inertia::render('franchiseeDashboard');
+})->middleware(['auth', 'verified'])->name('franchiseeDashboard');
+
 Route::get("/", function (){
     return Inertia::render('HomePage');
 });

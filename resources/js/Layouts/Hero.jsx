@@ -1,16 +1,17 @@
 export default function Hero() {
     return (
         <>
-            <img
-                src="images/001589022cd52fe180cac52549b3d1dc.jpg"
-                alt=""
-                className="w-full"
-            />
-            <div className="hero_container absolute bottom-0 left-0 right-0 top-40">
-                <h1 className="mt-4 text-center text-5xl font-extrabold">
+            <div className="hero_container relative flex flex-col items-center justify-start">
+                <img
+                    src="images/001589022cd52fe180cac52549b3d1dc.jpg"
+                    alt=""
+                    className="w-full"
+                />
+                <h1 className="absolute top-0 z-10 mt-4 text-center text-5xl font-extrabold">
                     Everything You Need To Know About ET Franchising
                 </h1>
-                <div className="search_box-container mx-auto mt-8 flex w-fit flex-col rounded-lg bg-gray-950 bg-opacity-20 px-20 py-8">
+
+                <div className="search_box-container absolute top-36 mx-auto flex w-fit flex-col rounded-lg bg-gray-950 bg-opacity-20 px-20 py-8">
                     <h2 className="mb-6 text-5xl font-normal">
                         Search all ET Franchise opportunities
                     </h2>
@@ -114,7 +115,7 @@ export default function Hero() {
                                 </option>
                             </select>
                         </div>
-                        <button className="rounded bg-blue-500 px-8 py-2 font-bold text-white hover:bg-blue-700">
+                        <button class="rounded bg-blue-500 px-8 py-2 font-bold text-white hover:bg-blue-700">
                             Search
                         </button>
                     </div>

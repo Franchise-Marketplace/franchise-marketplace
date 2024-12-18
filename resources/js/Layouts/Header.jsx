@@ -9,14 +9,11 @@ export default function Header() {
     return (
         <>
             <header className="header_container flex items-center justify-around bg-slate-50">
-                <Link href="/">
-                    <img
-                        src="images/BF-Magazine-Logo-REV-2.png"
-                        alt=""
-                        className="h-20"
-                    />
-                </Link>
-
+                <img
+                    src="images/BF-Magazine-Logo-REV-2.png"
+                    alt=""
+                    className="h-20"
+                />
                 <div className="header_buttons flex gap-x-6">
                     <button className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
                         News & Advice
@@ -44,7 +41,7 @@ export default function Header() {
                                     <Dropdown.Trigger>
                                         <button
                                             type="button"
-                                            className="flex items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                                            className="flex items-center rounded border border-blue-500 px-4 py-2 font-bold text-blue-500 hover:bg-blue-200 hover:text-blue-700"
                                         >
                                             {user.name}
                                             <svg
@@ -97,6 +94,16 @@ export default function Header() {
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
+
+                            {/* Signature Box */}
+                            {user.signature && (
+                                <div className="ml-4 border border-dashed border-blue-500 p-2 text-sm text-gray-600">
+                                    <span>Signed in as:</span>
+                                    <div className="font-bold text-blue-500">
+                                        {user.signature}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

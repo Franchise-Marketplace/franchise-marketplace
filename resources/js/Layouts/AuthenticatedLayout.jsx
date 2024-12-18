@@ -39,7 +39,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     <Dropdown.Trigger>
                                         <button
                                             type="button"
-                                            className="flex items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                                            className="flex items-center rounded border border-blue-500 px-4 py-2 font-bold text-blue-500 hover:bg-blue-200 hover:text-blue-700"
                                         >
                                             {user.name}
                                             <svg

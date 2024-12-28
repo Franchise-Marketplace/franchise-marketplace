@@ -1,22 +1,37 @@
+import AddListing from '@/Layouts/Dashboard/Details/AddListing';
+import ManageLeads from '@/Layouts/Dashboard/Details/ManageLeads';
+import ManageListing from '@/Layouts/Dashboard/Details/ManageListing';
+import MyDashboard from '@/Layouts/Dashboard/Details/MyDashboard';
+import Stats from '@/Layouts/Dashboard/Details/Stats';
+import SideBar from '@/Layouts/Dashboard/SideBar';
+import Footer from '@/Layouts/Footer';
 import Header from '@/Layouts/Header';
 import Nav from '@/Layouts/Nav';
+import { useState } from 'react';
 
-export default function Dashboard() {
+export default function Dashboard({ user }) {
+    const [currentSection, setCurrentSection] = useState('mydashboard'); // Default to Add Listing
+
+    const handleSectionChange = (section) => {
+        setCurrentSection(section);
+    };
     return (
         <>
             <Header />
             <Nav />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in as franchisor! This is the
-                            dashboard
-                        </div>
-                    </div>
+            <div className="flex flex-col bg-gray-100 lg:flex-row">
+                <SideBar user={user} onSectionChange={handleSectionChange} />
+                <div className="flex-1 p-8">
+                    {currentSection === 'addListing' && <AddListing />}
+                    {currentSection === 'manageListing' && <ManageListing />}
+                    {currentSection === 'manageLeads' && <ManageLeads />}
+                    {currentSection === 'mydashboard' && <MyDashboard />}
+                    {currentSection === 'stats' && <Stats />}
                 </div>
             </div>
+
+            <Footer />
         </>
     );
 }

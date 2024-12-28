@@ -1,9 +1,6 @@
 export default function SideBar() {
     return (
         <>
-            {/* <main className="flex">
-            <sidebar />
-        </main> */}
             <div className="item-center ml-4 flex flex-col justify-start">
                 <section className="my-4 h-screen w-full bg-white p-4 md:max-w-[300px]">
                     <h2 className="mb-4 text-2xl font-bold text-gray-500">

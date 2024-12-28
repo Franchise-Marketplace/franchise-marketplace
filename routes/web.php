@@ -15,7 +15,9 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard',[
+        'user' => auth()->user()
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/franchiseeDashboard', function () {

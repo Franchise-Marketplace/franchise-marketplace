@@ -9,7 +9,7 @@ import Header from '@/Layouts/Header';
 import Nav from '@/Layouts/Nav';
 import { useState } from 'react';
 
-export default function Dashboard({ user }) {
+export default function Dashboard({ user, listings }) {
     const [currentSection, setCurrentSection] = useState('mydashboard'); // Default to Add Listing
 
     const handleSectionChange = (section) => {
@@ -24,7 +24,9 @@ export default function Dashboard({ user }) {
                 <SideBar user={user} onSectionChange={handleSectionChange} />
                 <div className="flex-1 p-8">
                     {currentSection === 'addListing' && <AddListing />}
-                    {currentSection === 'manageListing' && <ManageListing />}
+                    {currentSection === 'manageListing' && (
+                        <ManageListing listings={listings} />
+                    )}
                     {currentSection === 'manageLeads' && <ManageLeads />}
                     {currentSection === 'mydashboard' && <MyDashboard />}
                     {currentSection === 'stats' && <Stats />}

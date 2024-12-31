@@ -1,6 +1,8 @@
 import { useForm } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function AddListing() {
+    const [visible, setVisible] = useState(false);
     const { data, setData, post, progress } = useForm({
         Franchise_name: '',
         Franchise_location: '',
@@ -24,7 +26,24 @@ export default function AddListing() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/listings');
+        post('/listings')
+            .then(() => {
+                setData({
+                    Franchise_name: '',
+                    Franchise_location: '',
+                    Franchise_type: '',
+                    Franchise_price: '',
+                    Franchise_description: '',
+                    Franchise_image: null,
+                    Franchise_contact: '',
+                    Franchise_email: '',
+                    Franchise_phone: '',
+                });
+                setVisible(true);
+            })
+            .catch((errors) => {
+                console.error(errors);
+            });
     };
 
     return (
@@ -32,6 +51,11 @@ export default function AddListing() {
             <h2 className="text-2xl font-bold text-blue-500">
                 Add Franchise Listing
             </h2>
+            {visible && (
+                <div className="mt-4 rounded bg-green-100 p-4 text-green-800">
+                    Listing added successfully!
+                </div>
+            )}
             <form onSubmit={handleSubmit} className="mt-6 w-2/4 space-y-4">
                 <div>
                     <label

@@ -1,29 +1,4 @@
-export default function ManageListing() {
-    const listings = [
-        {
-            id: 1,
-            title: 'Franchise A',
-            location: 'New York',
-            businessType: 'Restaurant',
-            price: 100000,
-            description: 'A prime location for a new restaurant.',
-            contactName: 'John Doe',
-            contactEmail: 'john@example.com',
-            contactPhone: '123-456-7890',
-        },
-        {
-            id: 2,
-            title: 'Franchise B',
-            location: 'Los Angeles',
-            businessType: 'Retail',
-            price: 150000,
-            description: 'An established retail business in a busy area.',
-            contactName: 'Jane Smith',
-            contactEmail: 'jane@example.com',
-            contactPhone: '987-654-3210',
-        },
-    ];
-
+export default function ManageListing({ listings }) {
     return (
         <div className="rounded-md bg-white p-6 shadow-md">
             <h2 className="text-2xl font-bold text-blue-500">
@@ -35,31 +10,39 @@ export default function ManageListing() {
                         key={listing.id}
                         className="rounded border border-gray-300 p-4"
                     >
+                        <img
+                            src={'storage/' + listing.Franchise_image}
+                            alt="franchise logo"
+                        />
                         <h3 className="text-xl font-semibold">
-                            {listing.title}
+                            {listing.Franchise_name}
                         </h3>
                         <p>
-                            <strong>Location:</strong> {listing.location}
+                            <strong>Location:</strong>{' '}
+                            {listing.Franchise_location}
+                        </p>
+
+                        <p>
+                            <strong>Type:</strong> {listing.Franchise_type}
                         </p>
                         <p>
-                            <strong>Type:</strong> {listing.businessType}
+                            <strong>Price:</strong> ${listing.Franchise_price}
                         </p>
                         <p>
-                            <strong>Price:</strong> ${listing.price}
+                            <strong>Description:</strong>{' '}
+                            {listing.Franchise_description}
                         </p>
                         <p>
-                            <strong>Description:</strong> {listing.description}
-                        </p>
-                        <p>
-                            <strong>Contact Name:</strong> {listing.contactName}
+                            <strong>Contact Name:</strong>{' '}
+                            {listing.Franchise_contact}
                         </p>
                         <p>
                             <strong>Contact Email:</strong>{' '}
-                            {listing.contactEmail}
+                            {listing.Franchise_email}
                         </p>
                         <p>
                             <strong>Contact Phone:</strong>{' '}
-                            {listing.contactPhone}
+                            {listing.Franchise_phone}
                         </p>
                     </li>
                 ))}

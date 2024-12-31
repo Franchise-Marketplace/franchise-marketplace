@@ -20,6 +20,7 @@ Route::get('/welcome', function () {
 
 Route::get('/dashboard', function () {
     $listings = Listing::where('user_id', auth()->id())->get();
+   
     return Inertia::render('Dashboard',[
         'user' => auth()->user(),
         'listings' => $listings,

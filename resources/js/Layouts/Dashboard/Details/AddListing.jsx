@@ -1,26 +1,30 @@
-import { useState } from 'react';
+import { useForm } from '@inertiajs/react';
 
 export default function AddListing() {
-    const [listingDetails, setListingDetails] = useState({
-        title: '',
-        location: '',
-        businessType: '',
-        price: '',
-        description: '',
-        contactName: '',
-        contactEmail: '',
-        contactPhone: '',
+    const { data, setData, post, progress } = useForm({
+        Franchise_name: '',
+        Franchise_location: '',
+        Franchise_type: '',
+        Franchise_price: '',
+        Franchise_description: '',
+        Franchise_image: null,
+        Franchise_contact: '',
+        Franchise_email: '',
+        Franchise_phone: '',
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setListingDetails({ ...listingDetails, [name]: value });
+        setData(name, value);
+    };
+
+    const handleFileChange = (e) => {
+        setData('Franchise_image', e.target.files[0]);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle adding listing logic (e.g., API call to save the listing)
-        console.log('Listing added:', listingDetails);
+        post('/listings');
     };
 
     return (
@@ -31,47 +35,47 @@ export default function AddListing() {
             <form onSubmit={handleSubmit} className="mt-6 w-2/4 space-y-4">
                 <div>
                     <label
-                        htmlFor="title"
+                        htmlFor="Franchise_name"
                         className="block text-sm font-semibold"
                     >
                         Franchise Name
                     </label>
                     <input
                         type="text"
-                        id="title"
-                        name="title"
-                        value={listingDetails.title}
+                        id="Franchise_name"
+                        name="Franchise_name"
+                        value={data.Franchise_name}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     />
                 </div>
                 <div>
                     <label
-                        htmlFor="location"
+                        htmlFor="Franchise_location"
                         className="block text-sm font-semibold"
                     >
                         Location
                     </label>
                     <input
                         type="text"
-                        id="location"
-                        name="location"
-                        value={listingDetails.location}
+                        id="Franchise_location"
+                        name="Franchise_location"
+                        value={data.Franchise_location}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     />
                 </div>
                 <div>
                     <label
-                        htmlFor="businessType"
+                        htmlFor="Franchise_type"
                         className="block text-sm font-semibold"
                     >
                         Type of Business
                     </label>
                     <select
-                        id="businessType"
-                        name="businessType"
-                        value={listingDetails.businessType}
+                        id="Franchise_type"
+                        name="Franchise_type"
+                        value={data.Franchise_type}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     >
@@ -79,85 +83,100 @@ export default function AddListing() {
                         <option value="Restaurant">Restaurant</option>
                         <option value="Retail">Retail</option>
                         <option value="Service">Service</option>
-                        <option value="Franchise">Franchise</option>
                         <option value="Fitness">Fitness</option>
                     </select>
                 </div>
                 <div>
                     <label
-                        htmlFor="price"
+                        htmlFor="Franchise_price"
                         className="block text-sm font-semibold"
                     >
                         Price
                     </label>
                     <input
                         type="number"
-                        id="price"
-                        name="price"
-                        value={listingDetails.price}
+                        id="Franchise_price"
+                        name="Franchise_price"
+                        value={data.Franchise_price}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     />
                 </div>
                 <div>
                     <label
-                        htmlFor="description"
+                        htmlFor="Franchise_image"
+                        className="block text-sm font-semibold"
+                    >
+                        Image Upload
+                    </label>
+                    <input
+                        type="file"
+                        id="Franchise_image"
+                        name="Franchise_image"
+                        onChange={handleFileChange}
+                        className="mt-2 w-full rounded border border-gray-300 p-2"
+                    />
+                    {progress && <div>Uploading: {progress.percentage}%</div>}
+                </div>
+                <div>
+                    <label
+                        htmlFor="Franchise_description"
                         className="block text-sm font-semibold"
                     >
                         Description
                     </label>
                     <textarea
-                        id="description"
-                        name="description"
-                        value={listingDetails.description}
+                        id="Franchise_description"
+                        name="Franchise_description"
+                        value={data.Franchise_description}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     />
                 </div>
                 <div>
                     <label
-                        htmlFor="contactName"
+                        htmlFor="Franchise_contact"
                         className="block text-sm font-semibold"
                     >
                         Contact Name
                     </label>
                     <input
                         type="text"
-                        id="contactName"
-                        name="contactName"
-                        value={listingDetails.contactName}
+                        id="Franchise_contact"
+                        name="Franchise_contact"
+                        value={data.Franchise_contact}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     />
                 </div>
                 <div>
                     <label
-                        htmlFor="contactEmail"
+                        htmlFor="Franchise_email"
                         className="block text-sm font-semibold"
                     >
                         Contact Email
                     </label>
                     <input
                         type="email"
-                        id="contactEmail"
-                        name="contactEmail"
-                        value={listingDetails.contactEmail}
+                        id="Franchise_email"
+                        name="Franchise_email"
+                        value={data.Franchise_email}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     />
                 </div>
                 <div>
                     <label
-                        htmlFor="contactPhone"
+                        htmlFor="Franchise_phone"
                         className="block text-sm font-semibold"
                     >
                         Contact Phone
                     </label>
                     <input
                         type="text"
-                        id="contactPhone"
-                        name="contactPhone"
-                        value={listingDetails.contactPhone}
+                        id="Franchise_phone"
+                        name="Franchise_phone"
+                        value={data.Franchise_phone}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
                     />

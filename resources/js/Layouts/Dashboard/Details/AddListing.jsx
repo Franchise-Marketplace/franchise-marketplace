@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 export default function AddListing() {
     const [visible, setVisible] = useState(false);
-    const { data, setData, post, progress } = useForm({
+    const { data, setData, post, reset, progress } = useForm({
         Franchise_name: '',
         Franchise_location: '',
         Franchise_type: '',
@@ -26,24 +26,18 @@ export default function AddListing() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/listings')
-            .then(() => {
-                setData({
-                    Franchise_name: '',
-                    Franchise_location: '',
-                    Franchise_type: '',
-                    Franchise_price: '',
-                    Franchise_description: '',
-                    Franchise_image: null,
-                    Franchise_contact: '',
-                    Franchise_email: '',
-                    Franchise_phone: '',
-                });
+        post('/listings', {
+            onSuccess: () => {
+                reset();
                 setVisible(true);
-            })
-            .catch((errors) => {
+                setTimeout(() => {
+                    setVisible(false);
+                }, 3000);
+            },
+            onError: (errors) => {
                 console.error(errors);
-            });
+            },
+        });
     };
 
     return (

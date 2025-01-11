@@ -5,7 +5,7 @@ import SideBar from '@/Layouts/SideBar';
 import SideDetail from '@/Layouts/SideDetail';
 import { Head } from '@inertiajs/react';
 
-export default function franchiseeDashboard() {
+export default function franchiseeDashboard({ listings, user }) {
     return (
         <>
             {/* <AuthenticatedLayout> */}
@@ -14,7 +14,7 @@ export default function franchiseeDashboard() {
             <Nav />
             <div className="flex">
                 <SideBar />
-                <SideDetail />
+                <SideDetail listings={listings} userId={user.id} />
             </div>
             <Footer />
             {/* </AuthenticatedLayout> */}

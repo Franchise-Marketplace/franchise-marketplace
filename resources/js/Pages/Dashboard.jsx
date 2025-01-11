@@ -15,6 +15,7 @@ export default function Dashboard({ user, listings }) {
     const handleSectionChange = (section) => {
         setCurrentSection(section);
     };
+
     return (
         <>
             <Header />
@@ -27,7 +28,9 @@ export default function Dashboard({ user, listings }) {
                     {currentSection === 'manageListing' && (
                         <ManageListing listings={listings} />
                     )}
-                    {currentSection === 'manageLeads' && <ManageLeads />}
+                    {currentSection === 'manageLeads' && (
+                        <ManageLeads listings={listings} />
+                    )}
                     {currentSection === 'mydashboard' && <MyDashboard />}
                     {currentSection === 'stats' && <Stats />}
                 </div>

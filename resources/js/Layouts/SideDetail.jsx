@@ -10,7 +10,6 @@ export default function SideDetail({ listings = [], userId }) {
         is_interested: false,
     });
 
-    // Initialize interestedListings
     useEffect(() => {
         const initialState = listings.reduce((acc, listing) => {
             const userTransaction = listing.transactions?.find(
@@ -22,7 +21,6 @@ export default function SideDetail({ listings = [], userId }) {
         setInterestedListings(initialState);
     }, [listings, userId]);
 
-    // Trigger `post` when `data` changes
     useEffect(() => {
         if (data.listing_id && data.buyer_id !== null) {
             const { listing_id: listingId, is_interested: newInterest } = data;
@@ -41,7 +39,7 @@ export default function SideDetail({ listings = [], userId }) {
                 onError: () => {
                     setInterestedListings((prev) => ({
                         ...prev,
-                        [listingId]: !newInterest, // Revert on error
+                        [listingId]: !newInterest,
                     }));
                     setProcessingStates((prev) => ({
                         ...prev,
@@ -50,22 +48,19 @@ export default function SideDetail({ listings = [], userId }) {
                 },
             });
         }
-    }, [data]); // Run whenever `data` changes
-
+    }, [data]);
     const handleInterestClick = (e, listing) => {
         e.preventDefault();
         const listingId = listing.id;
         const currentInterest = interestedListings[listingId];
         const newInterest = !currentInterest;
 
-        // Optimistic update: show spinner and set new state
         setInterestedListings((prev) => ({
             ...prev,
             [listingId]: newInterest,
         }));
         setProcessingStates((prev) => ({ ...prev, [listingId]: true }));
 
-        // Update form data (triggers `useEffect` above)
         setData({
             listing_id: listingId,
             buyer_id: userId,
@@ -167,3 +162,5 @@ export default function SideDetail({ listings = [], userId }) {
         </div>
     );
 }
+
+eliminated;

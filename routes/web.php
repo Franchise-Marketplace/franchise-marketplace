@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Listing;
 use App\Http\Controllers\ListingsController;
 use App\Http\Controllers\TransactionController;
+use App\Models\Transaction;
 
 Route::resource('listings', 'ListingsController');
 
@@ -20,9 +21,9 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/dashboard', function () {
-    $listings = Listing::where('user_id', auth()->id())->get();
-   
-    return Inertia::render('Dashboard',[
+    $listings = Listing::where('user_id', auth()->id())->with('transactions.buyer')->get();
+    
+    return Inertia::render('Dashboard', [
         'user' => auth()->user(),
         'listings' => $listings,
     ]);

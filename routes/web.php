@@ -23,10 +23,22 @@ Route::get('/welcome', function () {
 Route::get('/dashboard', function () {
     $listings = Listing::where('user_id', auth()->id())->with('transactions.buyer')->get();
     
-    return Inertia::render('Dashboard', [
-        'user' => auth()->user(),
-        'listings' => $listings,
-    ]);
+    if(Auth::user()->user_role == 'franchisor') {
+    
+        return Inertia::render('Dashboard', [
+            'user' => auth()->user(),
+            'listings' => $listings,
+        ]);
+    }
+    else {
+        $listings = Listing::with('transactions')
+        ->orderBy('created_at', 'desc')
+        ->get();
+        return Inertia::render('franchiseeDashboard', [
+            'user' => auth()->user(),
+            'listings' => $listings,
+        ]);
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -34,12 +46,22 @@ Route::get('/franchiseeDashboard', function () {
     $listings = Listing::with('transactions')
     ->orderBy('created_at', 'desc')
     ->get();
+    if(Auth::user()->user_role == 'franchisor') {
+        $listings = Listing::where('user_id', auth()->id())->with('transactions.buyer')->get();
+        
+        return Inertia::render('Dashboard', [
+            'user' => auth()->user(),
+            'listings' => $listings,
+        ]);
+    }
+    else {
+        return Inertia::render('franchiseeDashboard', [
+            'user' => auth()->user(),
+            'listings' => $listings,
+        ]);
+    }
 
-
-    return Inertia::render('franchiseeDashboard', [
-        'user' => auth()->user(),
-        'listings' => $listings,
-    ]);
+    
 })->middleware(['auth', 'verified'])->name('franchiseeDashboard');
 
 Route::middleware('auth')->group(function () {

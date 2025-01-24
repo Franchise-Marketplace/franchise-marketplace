@@ -8,6 +8,8 @@ use App\Models\Listing;
 use App\Http\Controllers\ListingsController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 Route::resource('listings', 'ListingsController');
 
@@ -64,6 +66,44 @@ Route::get('/franchiseeDashboard', function () {
     
 })->middleware(['auth', 'verified'])->name('franchiseeDashboard');
 
+Route::post('/search', function (Request $request) {
+    Log::info('Search Request:', $request->all());
+
+
+    $query = Listing::query();
+
+    if ($request->has('Franchise_type') && $request->input('Franchise_type') !== null && $request->input('Franchise_type') !== '') {
+        $query->where('Franchise_type', $request->input('Franchise_type'));
+    }
+
+    if ($request->has('Franchise_location') && $request->input('Franchise_location') !== null && $request->input('Franchise_location') !== '') {
+        $query->where('Franchise_location', $request->input('Franchise_location'));
+    }
+
+    if ($request->has('Franchise_price') && $request->input('Franchise_price') !== null && $request->input('Franchise_price') !== '') {
+        $query->where('Franchise_price', '<=', $request->input('Franchise_price'));
+        
+    }
+
+
+    $listings = $query->orderBy('created_at', 'desc')->get();
+
+
+    if (Auth::check() && Auth::user()->user_role == 'franchisee') {
+        return Inertia::render('franchiseeDashboard', [
+            'user' => auth()->user(),
+            'listings' => $listings,
+            'isSearch' => true,
+        ]);
+    }
+
+    return Inertia::render('HomePage', [
+        'showResults' => $listings,
+    ]);
+})->name('search');
+
+
+
 Route::middleware('auth')->group(function () {
         // Handles both interest and buy actions with dynamic methods.
         Route::post('/franchisee/{action}', [TransactionController::class, 'store'])->middleware('auth')->name('TransactionController.store');
@@ -88,7 +128,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    //listings routes
     Route::post('/listings', [ListingsController::class, 'store'])->name('ListingsController.store');
 });
 

@@ -1,7 +1,11 @@
 import { useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
-export default function SideDetail({ listings = [], userId }) {
+export default function SideDetail({
+    listings = [],
+    userId,
+    isSearch = false,
+}) {
     const [processingStates, setProcessingStates] = useState({});
     const [interestedListings, setInterestedListings] = useState({});
     const [selectedListing, setSelectedListing] = useState(null);
@@ -82,7 +86,7 @@ export default function SideDetail({ listings = [], userId }) {
             listing_id: listingId,
             buyer_id: userId,
             is_interested: newInterest,
-            is_bought: false, // Reset buying status
+            is_bought: false,
         });
     };
 
@@ -100,7 +104,7 @@ export default function SideDetail({ listings = [], userId }) {
         setData({
             listing_id: listingId,
             buyer_id: userId,
-            is_interested: true, // Automatically mark as interested
+            is_interested: true,
             is_bought: newBuyStatus,
         });
     };
@@ -111,22 +115,16 @@ export default function SideDetail({ listings = [], userId }) {
 
     return (
         <div className="mb-24 mt-8 flex flex-col px-8">
-            <div className="mt-2 flex justify-between">
-                <p className="text-gray-700">
-                    Showing {listings.length} Results
-                </p>
-                <select
-                    name="sort"
-                    id="sort"
-                    className="mr-2 inline-block w-48 rounded-md border border-gray-300 p-2 text-gray-700 focus:outline-none focus:ring-blue-400"
-                >
-                    <option value="">Search by</option>
-                    <option value="location">Location</option>
-                    <option value="industry">Industry</option>
-                    <option value="investment">Investment</option>
-                </select>
-            </div>
-            <h2 className="text-6xl font-bold text-blue-500">All Franchises</h2>
+            {isSearch ? (
+                <h2 className="text-6xl font-bold text-blue-500">
+                    Search Results
+                </h2>
+            ) : (
+                <h2 className="text-6xl font-bold text-blue-500">
+                    All Franchises
+                </h2>
+            )}
+
             <hr className="mb-10" />
 
             {listings.map((listing) => {

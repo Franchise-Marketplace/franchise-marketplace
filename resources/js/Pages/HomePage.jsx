@@ -3,7 +3,8 @@ import Header from '@/Layouts/Header';
 import Hero from '@/Layouts/Hero';
 import Nav from '@/Layouts/Nav';
 
-export default function HomePage() {
+export default function HomePage({ showResults = [] }) {
+    console.log(showResults);
     const products = [
         {
             image: '',
@@ -82,7 +83,7 @@ export default function HomePage() {
         <>
             <Header />
             <Nav />
-            <Hero />
+            <Hero showResults={showResults} />
             <div className="main_body-container">
                 <h2 className="mb-8 text-center text-4xl font-semibold">
                     Latest Franchises

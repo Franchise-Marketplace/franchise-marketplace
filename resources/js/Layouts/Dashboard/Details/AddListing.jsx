@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 export default function AddListing() {
     const [visible, setVisible] = useState(false);
+    const [industry, setIndustry] = useState('');
     const { data, setData, post, reset, progress } = useForm({
         Franchise_name: '',
         Franchise_location: '',
@@ -40,6 +41,19 @@ export default function AddListing() {
         });
     };
 
+    const industries = [
+        'Food & Beverage',
+        'Retail',
+        'Education',
+        'Health & Wellness',
+        'Real Estate',
+        'Technology',
+        'Fashion',
+        'Tourism',
+        'Agriculture',
+        'Logistics',
+    ];
+
     return (
         <div className="rounded-md bg-white p-6 shadow-md">
             <h2 className="text-2xl font-bold text-blue-500">
@@ -74,14 +88,25 @@ export default function AddListing() {
                     >
                         Location
                     </label>
-                    <input
-                        type="text"
+                    <select
                         id="Franchise_location"
                         name="Franchise_location"
                         value={data.Franchise_location}
                         onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
-                    />
+                    >
+                        <option value="">Select a City</option>
+                        <option value="Addis Ababa">Addis Ababa</option>
+                        <option value="Dire Dawa">Dire Dawa</option>
+                        <option value="Mekelle">Mekelle</option>
+                        <option value="Adama">Adama</option>
+                        <option value="Hawassa">Hawassa</option>
+                        <option value="Bahir Dar">Bahir Dar</option>
+                        <option value="Gondar">Gondar</option>
+                        <option value="Jimma">Jimma</option>
+                        <option value="Jigjiga">Jigjiga</option>
+                        <option value="Harar">Harar</option>
+                    </select>
                 </div>
                 <div>
                     <label
@@ -90,18 +115,23 @@ export default function AddListing() {
                     >
                         Type of Business
                     </label>
+
                     <select
                         id="Franchise_type"
                         name="Franchise_type"
-                        value={data.Franchise_type}
-                        onChange={handleChange}
                         className="mt-2 w-full rounded border border-gray-300 p-2"
+                        value={industry}
+                        onChange={(e) => {
+                            setIndustry(e.target.value);
+                            setData('Franchise_type', e.target.value);
+                        }}
                     >
-                        <option value="">Select Type</option>
-                        <option value="Restaurant">Restaurant</option>
-                        <option value="Retail">Retail</option>
-                        <option value="Service">Service</option>
-                        <option value="Fitness">Fitness</option>
+                        <option value="">Select an Industry</option>
+                        {industries.map((ind, index) => (
+                            <option key={index} value={ind}>
+                                {ind}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div>

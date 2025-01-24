@@ -1,23 +1,22 @@
-export default function Stats() {
-    const stats = {
-        totalListings: 20,
-        totalLeads: 35,
-        totalRevenue: 500000, // Example total revenue
-        listingsByType: {
-            Restaurant: 5,
-            Retail: 10,
-            Service: 3,
-            Franchise: 2,
-            Fitness: 0,
-        },
-        leadsByLocation: {
-            NewYork: 10,
-            LosAngeles: 8,
-            Chicago: 5,
-            Miami: 7,
-        },
-        revenuePerListing: 25000, // Example average revenue per listing
-    };
+export default function Stats({ Stats = [] }) {
+    // const stats = {
+    //     totalListings: 20,
+    //     totalLeads: 35,
+    //     totalRevenue: 500000,
+    //     listingsByType: {
+    //         Restaurant: 5,
+    //         Retail: 10,
+    //         Service: 3,
+    //         Franchise: 2,
+    //         Fitness: 0,
+    //     },
+    //     leadsByLocation: {
+    //         NewYork: 10,
+    //         LosAngeles: 8,
+    //         Chicago: 5,
+    //         Miami: 7,
+    //     },
+    //     revenuePerListing: 25000,
 
     return (
         <div className="rounded-md bg-white p-6 shadow-md">
@@ -29,32 +28,32 @@ export default function Stats() {
                     <h3 className="text-xl font-semibold text-blue-500">
                         Total Listings
                     </h3>
-                    <p>{stats.totalListings}</p>
+                    <p>{Stats.totalListings}</p>
                 </div>
                 <div className="rounded border border-gray-300 p-4">
                     <h3 className="text-xl font-semibold text-blue-500">
                         Total Leads
                     </h3>
-                    <p>{stats.totalLeads}</p>
+                    <p>{Stats.totalLeads}</p>
                 </div>
                 <div className="rounded border border-gray-300 p-4">
                     <h3 className="text-xl font-semibold text-blue-500">
                         Total Revenue
                     </h3>
-                    <p>${stats.totalRevenue.toLocaleString()}</p>
+                    <p>${Stats.totalRevenue.toLocaleString()}</p>
                 </div>
                 <div className="rounded border border-gray-300 p-4">
                     <h3 className="text-xl font-semibold text-blue-500">
                         Revenue per Listing
                     </h3>
-                    <p>${stats.revenuePerListing.toLocaleString()}</p>
+                    <p>${Stats.revenuePerListing.toLocaleString()}</p>
                 </div>
                 <div className="rounded border border-gray-300 p-4">
                     <h3 className="text-xl font-semibold text-blue-500">
                         Listings by Type
                     </h3>
                     <ul>
-                        {Object.entries(stats.listingsByType).map(
+                        {Object.entries(Stats.listingsByType).map(
                             ([type, count]) => (
                                 <li key={type}>
                                     <strong>{type}:</strong> {count}
@@ -68,7 +67,7 @@ export default function Stats() {
                         Leads by Location
                     </h3>
                     <ul>
-                        {Object.entries(stats.leadsByLocation).map(
+                        {Object.entries(Stats.leadsByLocation).map(
                             ([location, count]) => (
                                 <li key={location}>
                                     <strong>{location}:</strong> {count}

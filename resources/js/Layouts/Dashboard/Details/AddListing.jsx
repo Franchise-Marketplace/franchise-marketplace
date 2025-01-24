@@ -1,10 +1,11 @@
 import { useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function AddListing() {
+export default function AddListing({ editingListing = [], isEdit = false }) {
     const [visible, setVisible] = useState(false);
+    const [notification, setNotification] = useState('');
     const [industry, setIndustry] = useState('');
-    const { data, setData, post, reset, progress } = useForm({
+    const { data, setData, post, patch, reset, progress } = useForm({
         Franchise_name: '',
         Franchise_location: '',
         Franchise_type: '',
@@ -18,7 +19,10 @@ export default function AddListing() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setData(name, value);
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
 
     const handleFileChange = (e) => {
@@ -27,19 +31,60 @@ export default function AddListing() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/listings', {
-            onSuccess: () => {
-                reset();
-                setVisible(true);
-                setTimeout(() => {
-                    setVisible(false);
-                }, 3000);
-            },
-            onError: (errors) => {
-                console.error(errors);
-            },
-        });
+
+        console.log('Submitting form data:', data);
+
+        if (!isEdit) {
+            post('/listings', {
+                onSuccess: () => {
+                    reset();
+                    setNotification('Listing added successfully!');
+                    setVisible(true);
+                    setTimeout(() => {
+                        setVisible(false);
+                    }, 3000);
+                },
+                onError: (errors) => {
+                    console.error('Error adding listing:', errors);
+                },
+            });
+        } else if (editingListing.id) {
+            patch(`/listings/${editingListing.id}/edit`, {
+                onSuccess: () => {
+                    reset();
+                    setNotification('Listing edited successfully!');
+                    setVisible(true);
+                    setTimeout(() => {
+                        setVisible(false);
+                    }, 3000);
+                    isEdit = false;
+                },
+                onError: (errors) => {
+                    console.error('Error editing listing:', errors);
+                },
+            });
+        } else {
+            console.error('ID is required for editing');
+        }
     };
+
+    useEffect(() => {
+        if (isEdit && editingListing && editingListing.id) {
+            setData({
+                Franchise_name: editingListing.Franchise_name || '',
+                Franchise_location: editingListing.Franchise_location || '',
+                Franchise_type: editingListing.Franchise_type || '',
+                Franchise_price: editingListing.Franchise_price || '',
+                Franchise_description:
+                    editingListing.Franchise_description || '',
+                Franchise_image: editingListing.Franchise_image || null,
+                Franchise_contact: editingListing.Franchise_contact || '',
+                Franchise_email: editingListing.Franchise_email || '',
+                Franchise_phone: editingListing.Franchise_phone || '',
+            });
+            setIndustry(editingListing.Franchise_type || '');
+        }
+    }, [editingListing, isEdit, setData]);
 
     const industries = [
         'Food & Beverage',
@@ -56,12 +101,19 @@ export default function AddListing() {
 
     return (
         <div className="rounded-md bg-white p-6 shadow-md">
-            <h2 className="text-2xl font-bold text-blue-500">
-                Add Franchise Listing
-            </h2>
+            {!isEdit ? (
+                <h2 className="text-2xl font-bold text-blue-500">
+                    Add Franchise Listing
+                </h2>
+            ) : (
+                <h2 className="text-2xl font-bold text-blue-500">
+                    {' '}
+                    Edit Franchise Listing
+                </h2>
+            )}
             {visible && (
                 <div className="mt-4 rounded bg-green-100 p-4 text-green-800">
-                    Listing added successfully!
+                    {notification}
                 </div>
             )}
             <form onSubmit={handleSubmit} className="mt-6 w-2/4 space-y-4">
@@ -233,7 +285,7 @@ export default function AddListing() {
                     type="submit"
                     className="mt-4 rounded bg-blue-500 p-2 text-white"
                 >
-                    Add Listing
+                    {isEdit ? 'Edit Listing' : 'Add Listing'}
                 </button>
             </form>
         </div>

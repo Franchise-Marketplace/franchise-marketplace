@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Listing;
+use Illuminate\Support\Facades\Log;
 
 class ListingsController extends Controller
 {
@@ -35,4 +36,37 @@ class ListingsController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Listing added successfully.');
     }
+
+    public function edit($id)
+    {
+        Log::info('Edit listing id: ' . $id);
+        Log::info(' listings: ', request()->all());
+    
+        $listing = Listing::findOrFail($id);
+        $data = request()->all();
+
+        foreach ($data as $key => $value) {
+            if (!empty($value) && $key != 'isEdit') { 
+                $listing->$key = $value;
+            }
+        }
+
+      
+        $listing->isEdit = true;
+
+        $listing->save();
+
+        return redirect()->route('dashboard')->with('message', 'Listing edited successfully.');
+    }
+
+
+    public function destroy($id)
+    {
+        $listing = Listing::findOrFail($id);
+        $listing->delete();
+
+        return redirect()->back()->with('message', 'Listing deleted successfully.');
+    }
+
+
 }

@@ -4,7 +4,6 @@ import Hero from '@/Layouts/Hero';
 import Nav from '@/Layouts/Nav';
 
 export default function HomePage({ showResults = [] }) {
-    console.log(showResults);
     const products = [
         {
             image: '',

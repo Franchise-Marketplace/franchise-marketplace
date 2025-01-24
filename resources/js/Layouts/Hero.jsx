@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Hero({ showResults = [] }) {
     const [industry, setIndustry] = useState('');
@@ -11,15 +11,19 @@ export default function Hero({ showResults = [] }) {
         Franchise_price: '',
     });
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 200,
+            behavior: 'smooth',
+        });
+    }, [showResults]);
+
     const handleSearch = () => {
         console.log(data);
+
         post('/search', {
             onSuccess: () => {
                 reset();
-                window.scrollBy({
-                    top: -70,
-                    behavior: 'smooth',
-                });
             },
             onError: (errors) => {
                 console.error(errors);
@@ -39,12 +43,11 @@ export default function Hero({ showResults = [] }) {
                     Everything You Need To Know About ET Franchising
                 </h1>
 
-                <div className="search_box-container absolute top-36 mx-auto flex w-fit flex-col rounded-lg bg-gray-950 bg-opacity-20 px-10 py-8">
+                <div className="search_box-container w-fill absolute top-36 mx-auto flex w-2/3 flex-col rounded-lg bg-gray-950 bg-opacity-20 px-10 py-8">
                     <h2 className="mb-6 text-3xl font-normal text-white">
                         Search all ET Franchise opportunities
                     </h2>
                     <div className="searching_categories flex flex-col items-center gap-6 md:flex-row">
-                        {/* Industry Dropdown */}
                         <div className="search_industry flex w-full flex-col">
                             <label
                                 htmlFor="industry"
@@ -79,7 +82,6 @@ export default function Hero({ showResults = [] }) {
                             </select>
                         </div>
 
-                        {/* Location Dropdown */}
                         <div className="search_location flex w-full flex-col">
                             <label
                                 htmlFor="location"
@@ -115,7 +117,6 @@ export default function Hero({ showResults = [] }) {
                             </select>
                         </div>
 
-                        {/* Investment Dropdown */}
                         <div className="search_investment flex w-full flex-col">
                             <label
                                 htmlFor="investment"
@@ -153,7 +154,7 @@ export default function Hero({ showResults = [] }) {
             </div>
 
             {showResults.length > 0 && (
-                <div className="mt-12 px-8">
+                <div className="mt-12 p-5 px-8">
                     <h3 className="text-2xl font-bold text-blue-500">
                         Search Results
                     </h3>

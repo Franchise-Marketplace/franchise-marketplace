@@ -2,25 +2,14 @@ import { useForm } from '@inertiajs/react';
 
 export default function SideBar() {
     const { data, setData, post } = useForm({
-        investment: '',
-        location: '',
-        industry: '',
+        Franchise_price: '',
+        Franchise_location: '',
+        Franchise_type: '',
     });
 
-    const industries = [
-        'Food & Beverage',
-        'Retail',
-        'Education',
-        'Health & Wellness',
-        'Real Estate',
-        'Technology',
-        'Fashion',
-        'Tourism',
-        'Agriculture',
-        'Logistics',
-    ];
-
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(data);
         post('/search');
     };
 
@@ -41,22 +30,18 @@ export default function SideBar() {
                         <select
                             name="investment"
                             id="investment"
-                            value={data.investment}
+                            value={data.Franchise_price}
                             onChange={(e) =>
-                                setData('investment', e.target.value)
+                                setData('Franchise_price', e.target.value)
                             }
                             className="focus:blue-400 w-full rounded-md border border-gray-300 p-2 text-gray-700 focus:outline-none"
                         >
                             <option value="">Select Investment</option>
-                            {[...Array(10).keys()].map((i) => {
-                                const value = (i + 1) * 10000;
-                                return (
-                                    <option key={value} value={value}>
-                                        Franchise under {value.toLocaleString()}{' '}
-                                        ETB
-                                    </option>
-                                );
-                            })}
+                            <option value="20000">20,000 ETB</option>
+                            <option value="50000">50,000 ETB</option>
+                            <option value="100000">100,000 ETB</option>
+                            <option value="200000">200,000 ETB</option>
+                            <option value="500000">500,000 ETB</option>
                         </select>
                     </div>
 
@@ -70,21 +55,29 @@ export default function SideBar() {
                         <select
                             name="industry"
                             id="industry"
-                            value={data.industry}
+                            value={data.Franchise_type}
                             onChange={(e) =>
-                                setData('industry', e.target.value)
+                                setData('Franchise_type', e.target.value)
                             }
                             className="focus:blue-400 w-full rounded-md border border-gray-300 p-2 text-gray-700 focus:outline-none"
                         >
                             <option value="">Select Industry</option>
-                            {industries.map((industry, index) => (
-                                <option key={index} value={industry}>
-                                    {industry}
-                                </option>
-                            ))}
+                            <option value="Food & Beverage">
+                                Food & Beverage
+                            </option>
+                            <option value="Retail">Retail</option>
+                            <option value="Education">Education</option>
+                            <option value="Health & Wellness">
+                                Health & Wellness
+                            </option>
+                            <option value="Real Estate">Real Estate</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Fashion">Fashion</option>
+                            <option value="Tourism">Tourism</option>
+                            <option value="Agriculture">Agriculture</option>
+                            <option value="Logistics">Logistics</option>
                         </select>
                     </div>
-
                     <div className="search_location flex flex-col">
                         <label
                             htmlFor="location"
@@ -95,29 +88,23 @@ export default function SideBar() {
                         <select
                             name="location"
                             id="location"
-                            value={data.location}
+                            value={data.Franchise_location}
                             onChange={(e) =>
-                                setData('location', e.target.value)
+                                setData('Franchise_location', e.target.value)
                             }
                             className="focus:blue-400 w-full rounded-md border border-gray-300 p-2 text-gray-700 focus:outline-none"
                         >
                             <option value="">Select Location</option>
-                            {[
-                                'Addis Ababa',
-                                'Dire Dawa',
-                                'Mekelle',
-                                'Adama',
-                                'Hawassa',
-                                'Bahir Dar',
-                                'Gondar',
-                                'Jimma',
-                                'Jigjiga',
-                                'Harar',
-                            ].map((city, index) => (
-                                <option key={index} value={city}>
-                                    {city}
-                                </option>
-                            ))}
+                            <option value="Addis Ababa">Addis Ababa</option>
+                            <option value="Dire Dawa">Dire Dawa</option>
+                            <option value="Mekelle">Mekelle</option>
+                            <option value="Adama">Adama</option>
+                            <option value="Hawassa">Hawassa</option>
+                            <option value="Bahir Dar">Bahir Dar</option>
+                            <option value="Gondar">Gondar</option>
+                            <option value="Jimma">Jimma</option>
+                            <option value="Jigjiga">Jigjiga</option>
+                            <option value="Harar">Harar</option>
                         </select>
                     </div>
 

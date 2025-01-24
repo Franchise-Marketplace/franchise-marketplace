@@ -10,6 +10,7 @@ use App\Http\Controllers\TransactionController;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\StatController;
 
 Route::resource('listings', 'ListingsController');
 
@@ -24,12 +25,14 @@ Route::get('/welcome', function () {
 
 Route::get('/dashboard', function () {
     $listings = Listing::where('user_id', auth()->id())->with('transactions.buyer')->get();
+    $stat = StatController::fetchStats(auth()->id()); 
     
     if(Auth::user()->user_role == 'franchisor') {
     
         return Inertia::render('Dashboard', [
             'user' => auth()->user(),
             'listings' => $listings,
+            'stat' => $stat,
         ]);
     }
     else {
@@ -48,18 +51,21 @@ Route::get('/franchiseeDashboard', function () {
     $listings = Listing::with('transactions')
     ->orderBy('created_at', 'desc')
     ->get();
+    $stat = StatController::fetchStats(auth()->id()); 
     if(Auth::user()->user_role == 'franchisor') {
         $listings = Listing::where('user_id', auth()->id())->with('transactions.buyer')->get();
         
         return Inertia::render('Dashboard', [
             'user' => auth()->user(),
             'listings' => $listings,
+            'stat' => $stat,
         ]);
     }
     else {
         return Inertia::render('franchiseeDashboard', [
             'user' => auth()->user(),
             'listings' => $listings,
+            
         ]);
     }
 
@@ -111,10 +117,10 @@ Route::middleware('auth')->group(function () {
         Route::get('franchisee/create', function () {
             return redirect('/franchiseeDashboard');
         });
-        // Route::get('franchisee/update', function () {
-        //     return redirect('/franchiseeDashboard');
-        // });
-    
+        Route::post('/listings', [ListingsController::class, 'store'])->name('listings.store');
+        Route::patch('/listings/{id}/edit', [ListingsController::class, 'edit'])->name('listings.edit');
+        Route::delete('/listings/delete/{id}', [ListingsController::class, 'destroy'])->name('listings.destroy');
+     
         // Handles deletion of a resource.
         Route::delete('/franchiseeDashboard', [TransactionController::class, 'destroy'])->name('TransactionController.destroy');
     });

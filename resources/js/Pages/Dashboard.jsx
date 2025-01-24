@@ -9,11 +9,20 @@ import Header from '@/Layouts/Header';
 import Nav from '@/Layouts/Nav';
 import { useState } from 'react';
 
-export default function Dashboard({ user, listings }) {
-    const [currentSection, setCurrentSection] = useState('mydashboard'); // Default to Add Listing
+export default function Dashboard({ user, listings, stat = [] }) {
+    const [currentSection, setCurrentSection] = useState('mydashboard');
+    const [editingListing, setEditingListing] = useState(null);
+    const [isEdit, setIsEdit] = useState(false);
 
     const handleSectionChange = (section) => {
         setCurrentSection(section);
+    };
+
+    const handleEdit = (listing, section, editFlag) => {
+        setEditingListing(listing);
+        setIsEdit(editFlag);
+        setCurrentSection(section);
+        console.log(listing);
     };
 
     return (
@@ -24,15 +33,27 @@ export default function Dashboard({ user, listings }) {
             <div className="flex flex-col bg-gray-100 lg:flex-row">
                 <SideBar user={user} onSectionChange={handleSectionChange} />
                 <div className="flex-1 p-8">
-                    {currentSection === 'addListing' && <AddListing />}
+                    {currentSection === 'addListing' &&
+                        (isEdit ? (
+                            <AddListing
+                                editingListing={editingListing}
+                                isEdit={isEdit}
+                            />
+                        ) : (
+                            <AddListing />
+                        ))}
+
                     {currentSection === 'manageListing' && (
-                        <ManageListing listings={listings} />
+                        <ManageListing
+                            listings={listings}
+                            onEdit={handleEdit}
+                        />
                     )}
                     {currentSection === 'manageLeads' && (
                         <ManageLeads listings={listings} />
                     )}
                     {currentSection === 'mydashboard' && <MyDashboard />}
-                    {currentSection === 'stats' && <Stats />}
+                    {currentSection === 'stats' && <Stats Stats={stat} />}
                 </div>
             </div>
 

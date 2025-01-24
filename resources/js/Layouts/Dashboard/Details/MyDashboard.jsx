@@ -5,10 +5,6 @@ export default function MyDashboard() {
                 <h2 className="mb-4 text-xl font-bold text-blue-500">
                     My Dashboard
                 </h2>
-                <p>
-                    Your listing is 0% complete. Please update your profile to
-                    make it live.
-                </p>
 
                 {/* Content Sections */}
                 <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">

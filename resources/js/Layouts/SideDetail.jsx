@@ -10,6 +10,8 @@ export default function SideDetail({
     const [interestedListings, setInterestedListings] = useState({});
     const [selectedListing, setSelectedListing] = useState(null);
     const [buyListings, setBuyListings] = useState({});
+    const [filter, setFilter] = useState('all');
+
     const { post, setData, errors, data } = useForm({
         listing_id: null,
         buyer_id: userId,
@@ -113,6 +115,11 @@ export default function SideDetail({
         setSelectedListing(null);
     };
 
+    const filteredListings =
+        filter === 'bought'
+            ? listings.filter((listing) => buyListings[listing.id])
+            : listings;
+
     return (
         <div className="mb-24 mt-8 flex flex-col px-8">
             {isSearch ? (
@@ -120,14 +127,24 @@ export default function SideDetail({
                     Search Results
                 </h2>
             ) : (
-                <h2 className="text-6xl font-bold text-blue-500">
-                    All Franchises
-                </h2>
+                <div className="flex items-center justify-between">
+                    <h2 className="text-6xl font-bold text-blue-500">
+                        All Franchises
+                    </h2>
+                    <select
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                        className="w-fill rounded border px-4 py-2 text-lg"
+                    >
+                        <option value="all">All</option>
+                        <option value="bought">Bought</option>
+                    </select>
+                </div>
             )}
 
             <hr className="mb-10" />
 
-            {listings.map((listing) => {
+            {filteredListings.map((listing) => {
                 const isInterested = interestedListings[listing.id] || false;
                 const isBought = buyListings[listing.id] || false;
                 const isProcessing = processingStates[listing.id] || false;

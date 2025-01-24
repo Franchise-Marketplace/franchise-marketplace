@@ -1,16 +1,27 @@
+import { Inertia } from '@inertiajs/inertia';
 import { useForm } from '@inertiajs/react';
 
+// Trigger a fresh request
+
 export default function SideBar() {
+    const fetchFreshData = () => {
+        Inertia.visit(window.location.href, {
+            method: 'get',
+            preserveState: true,
+            replace: true,
+        });
+    };
     const { data, setData, post } = useForm({
-        Franchise_price: '',
         Franchise_location: '',
         Franchise_type: '',
+        Franchise_price: '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(data);
         post('/search');
+        fetchFreshData;
     };
 
     return (

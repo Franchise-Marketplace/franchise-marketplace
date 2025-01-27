@@ -7,7 +7,7 @@ export default function Hero() {
                     alt=""
                     className="w-full"
                 />
-                <h1 className="absolute top-0 z-10 mt-4 text-center text-5xl font-extrabold">
+                <h1 className="absolute top-0 z-10 mt-8 text-center text-5xl font-extrabold">
                     Everything You Need To Know About ET Franchising
                 </h1>
 

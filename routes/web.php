@@ -108,7 +108,7 @@ Route::post('/search', function (Request $request) {
     ]);
 })->name('search');
 
-
+Route::get('/listings-search', [ListingsController::class, 'search'])->name('listings.search');
 
 Route::middleware('auth')->group(function () {
         // Handles both interest and buy actions with dynamic methods.
@@ -117,6 +117,7 @@ Route::middleware('auth')->group(function () {
         Route::get('franchisee/create', function () {
             return redirect('/franchiseeDashboard');
         });
+        
         Route::post('/listings', [ListingsController::class, 'store'])->name('listings.store');
         Route::patch('/listings/{id}/edit', [ListingsController::class, 'edit'])->name('listings.edit');
         Route::delete('/listings/delete/{id}', [ListingsController::class, 'destroy'])->name('listings.destroy');

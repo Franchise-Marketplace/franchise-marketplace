@@ -1,9 +1,15 @@
+import Categories from '@/Layouts/Categories';
 import Footer from '@/Layouts/Footer';
 import Header from '@/Layouts/Header';
 import Hero from '@/Layouts/Hero';
 import Nav from '@/Layouts/Nav';
 
-export default function HomePage({ showResults = [] }) {
+export default function HomePage({
+    showResults = [],
+    pagination = 1,
+    categories = [],
+    listings = [],
+}) {
     const products = [
         {
             image: '',
@@ -83,6 +89,7 @@ export default function HomePage({ showResults = [] }) {
             <Header />
             <Nav />
             <Hero showResults={showResults} />
+
             <div className="main_body-container">
                 <h2 className="mb-8 text-center text-4xl font-semibold">
                     Latest Franchises
@@ -118,10 +125,13 @@ export default function HomePage({ showResults = [] }) {
                 <h2 className="mb-8 text-center text-4xl font-semibold">
                     Franchise by Industry
                 </h2>
-                <div className="franchise_by_industry_container mb-8 flex flex-wrap justify-center gap-x-7">
-                    {services.map((service) => {
+                {/* <div className="franchise_by_industry_container mb-8 flex flex-wrap justify-center gap-x-7">
+                    {services.map((service, id) => {
                         return (
-                            <div className="lists relative mb-12 flex h-40 w-1/5 flex-col rounded bg-[url('images/BF-Magazine-Logo-REV-2.png')] shadow-xl">
+                            <div
+                                className="lists relative mb-12 flex h-40 w-1/5 flex-col rounded bg-[url('images/BF-Magazine-Logo-REV-2.png')] shadow-xl"
+                                key={id}
+                            >
                                 <h3 className="z-10 text-center">
                                     {service.service_name}
                                 </h3>
@@ -132,7 +142,8 @@ export default function HomePage({ showResults = [] }) {
                             </div>
                         );
                     })}
-                </div>
+                </div> */}
+                <Categories listings={listings} pagination={pagination} />
                 <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
                     <div
                         className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
@@ -311,9 +322,12 @@ export default function HomePage({ showResults = [] }) {
                     Franchise News & Advice
                 </h2>
                 <div className="franchise_by_industry_container mb-8 flex flex-wrap justify-center gap-x-7">
-                    {services.map((service) => {
+                    {services.map((service, index) => {
                         return (
-                            <div className="lists relative mb-12 flex h-40 w-1/5 flex-col rounded bg-[url('images/BF-Magazine-Logo-REV-2.png')] shadow-xl">
+                            <div
+                                className="lists relative mb-12 flex h-40 w-1/5 flex-col rounded bg-[url('images/BF-Magazine-Logo-REV-2.png')] shadow-xl"
+                                key={index}
+                            >
                                 <h3 className="z-10 text-center">
                                     {service.service_name}
                                 </h3>
@@ -325,6 +339,7 @@ export default function HomePage({ showResults = [] }) {
                         );
                     })}
                 </div>
+
                 <div className="pb-14">
                     <div className="relative isolate bg-white px-6 py-1 sm:py-1 lg:px-8">
                         <div className="mx-auto grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">

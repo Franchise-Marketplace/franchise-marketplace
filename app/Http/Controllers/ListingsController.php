@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class ListingsController extends Controller
 {
@@ -57,6 +58,34 @@ class ListingsController extends Controller
         $listing->save();
 
         return redirect()->route('dashboard')->with('message', 'Listing edited successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        Log::info('Search Request:', $request->all());
+        $category = $request->input('category');
+        $page = $request->input('page', 1);
+        $sort = $request->input('sort', 'Franchise_name');
+        $perPage = 10;
+
+        $query = Listing::query();
+
+        if ($category) {
+            $query->where('Franchise_type', $category);
+        }
+
+        $listings = $query->orderBy($sort)->paginate($perPage, ['*'], 'page', $page);
+
+        return response()->json([
+            'listings' => $listings->items(),
+            'pagination' => [
+                'current_page' => $listings->currentPage(),
+                'last_page' => $listings->lastPage(),
+                'per_page' => $listings->perPage(),
+                'total' => $listings->total(),
+            ],
+        ]);
+        
     }
 
 

@@ -1,4 +1,3 @@
-import { Inertia } from '@inertiajs/inertia';
 import { useForm } from '@inertiajs/react';
 
 // Trigger a fresh request

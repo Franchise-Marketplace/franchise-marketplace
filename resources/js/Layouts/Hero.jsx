@@ -1,22 +1,24 @@
 import { useForm } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function Hero({ showResults = [] }) {
     const [industry, setIndustry] = useState('');
     const [locationSearch, setLocationSearch] = useState('');
     const [investment, setInvestment] = useState('');
+    const [searched, setSearched] = useState(false);
+    const viewRef = useRef(null);
     const { data, setData, post, reset } = useForm({
         Franchise_location: '',
         Franchise_type: '',
         Franchise_price: '',
     });
 
-    useEffect(() => {
-        window.scrollTo({
-            top: 200,
-            behavior: 'smooth',
-        });
-    }, [showResults]);
+    // useEffect(() => {
+    //     window.scrollTo({
+    //         top: 700,
+    //         behavior: 'smooth',
+    //     });
+    // }, [showResults]);
 
     const handleSearch = () => {
         console.log(data);
@@ -24,6 +26,14 @@ export default function Hero({ showResults = [] }) {
         post('/search', {
             onSuccess: () => {
                 reset();
+                window.scrollTo({
+                    top: 700,
+                    behavior: 'smooth',
+                });
+                setSearched(true);
+                if (viewRef.current) {
+                    viewRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
             },
             onError: (errors) => {
                 console.error(errors);
@@ -142,7 +152,6 @@ export default function Hero({ showResults = [] }) {
                             </select>
                         </div>
 
-                        {/* Search Button */}
                         <button
                             onClick={handleSearch}
                             className="rounded bg-blue-500 px-8 py-2 font-bold text-white hover:bg-blue-700"
@@ -153,37 +162,46 @@ export default function Hero({ showResults = [] }) {
                 </div>
             </div>
 
-            {showResults.length > 0 && (
-                <div className="mt-12 p-5 px-8">
-                    <h3 className="text-2xl font-bold text-blue-500">
-                        Search Results
-                    </h3>
-                    <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-3">
-                        {showResults.map((listing) => (
-                            <div
-                                key={listing.id}
-                                className="rounded border p-4 shadow"
-                            >
-                                <img
-                                    src={'storage/' + listing.Franchise_image}
-                                    alt={listing.Franchise_name}
-                                    className="h-48 w-full rounded object-cover"
-                                />
-                                <h4 className="mt-2 text-lg font-semibold">
-                                    {listing.Franchise_name}
-                                </h4>
-                                <p className="text-gray-600">
-                                    {listing.Franchise_description}
-                                </p>
-                                <p className="font-bold text-blue-500">
-                                    {listing.Franchise_price} ETB
-                                </p>
-                                <p>{listing.Franchise_location}</p>
-                            </div>
-                        ))}
+            {searched &&
+                (showResults.length > 0 ? (
+                    <div className="mt-5 p-5 pb-8 pt-2">
+                        <h3 className="text-center text-2xl font-bold text-blue-500">
+                            Search Results
+                        </h3>
+                        <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-3">
+                            {showResults.map((listing) => (
+                                <div
+                                    key={listing.id}
+                                    className="rounded border p-4 shadow"
+                                >
+                                    <img
+                                        src={
+                                            'storage/' + listing.Franchise_image
+                                        }
+                                        alt={listing.Franchise_name}
+                                        className="h-48 w-full rounded object-cover"
+                                    />
+                                    <h4 className="mt-2 text-lg font-semibold">
+                                        {listing.Franchise_name}
+                                    </h4>
+                                    <p className="text-gray-600">
+                                        {listing.Franchise_description}
+                                    </p>
+                                    <p className="font-bold text-blue-500">
+                                        {listing.Franchise_price} ETB
+                                    </p>
+                                    <p>{listing.Franchise_location}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            )}
+                ) : (
+                    <div>
+                        <h3 className="text-center text-2xl font-bold text-blue-500">
+                            No results found
+                        </h3>
+                    </div>
+                ))}
         </>
     );
 }

@@ -3,3 +3,17 @@ GET http://127.0.0.1:8000
 
 ###
 GET http://127.0.0.1:8000/welcome
+
+
+###
+POST http://127.0.0.1:8000/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "user_role": "franchisor",
+    "password": "password123",
+    "password_confirmation": "password123"
+}

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\Listing;
+
 
 class TransactionController extends Controller
 {
@@ -24,57 +27,53 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'listing_id' => 'required|exists:listings,id',
-            'buyer_id' => 'required|exists:users,id',
-            'is_bought' => 'boolean',
-            'is_interested' => 'boolean',
-        ]);
+   
+    
+     public function store(Request $request)
+        {
+            // Log the incoming request payload
+            \Log::info('Request Payload:', $request->all());
+        
 
-        $transaction = Transaction::create([
-            'listing_id' => $request->listing_id,
-            'buyer_id' => $request->buyer_id,
-            'is_bought' => $request->is_bought ?? false,
-            'is_interested' => $request->is_interested ?? false,
-        ]);
+            // Validate the incoming request data
+            $validatedData = $request->validate([
+                'listing_id' => 'required|exists:listings,id',
+                'buyer_id' => 'required|exists:users,id',
+                'is_interested' => 'boolean',
+                'is_bought' => 'boolean',
+            ]);
 
-        return response()->json($transaction, 201);
-    }
+            \Log::info('Validated Data:', $validatedData);
 
-    /**
-     * Display the specified transaction.
-     *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Transaction $transaction)
-    {
-        return response()->json($transaction);
-    }
+            // Check if the transaction already exists
+            $existingTransaction = Transaction::where('listing_id', $validatedData['listing_id'])
+                                            ->where('buyer_id', $validatedData['buyer_id'])
+                                            ->first();
 
-    /**
-     * Update the specified transaction in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Transaction $transaction)
-    {
-        $request->validate([
-            'listing_id' => 'exists:listings,id',
-            'buyer_id' => 'exists:users,id',
-            'is_bought' => 'boolean',
-            'is_interested' => 'boolean',
-        ]);
+            if ($existingTransaction) {
+                $existingTransaction->update([
+                    'is_interested' => $validatedData['is_interested'] ?? true,
+                    'is_bought' => $validatedData['is_bought'] ?? false,
+                ]);
+            } else {
+                Transaction::create([
+                    'listing_id' => $validatedData['listing_id'],
+                    'buyer_id' => $validatedData['buyer_id'],
+                    'is_interested' => $validatedData['is_interested'] ?? false,
+                    'is_bought' => $validatedData['is_bought'] ?? false,
+                ]);
+            }
 
-        $transaction->update($request->all());
+            $listings = Listing::with('transactions')->orderBy('created_at', 'desc')->get();
 
-        return response()->json($transaction);
-    }
+            return Inertia::render('franchiseeDashboard', [
+                'user' =>auth()->user(),
+                'listings' => $listings,
+            ])->with('success', 'Status has been updated!');
+        }
 
+
+     
     /**
      * Remove the specified transaction from storage.
      *

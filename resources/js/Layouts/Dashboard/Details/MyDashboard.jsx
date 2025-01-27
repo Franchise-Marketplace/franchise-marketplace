@@ -1,4 +1,4 @@
-export default function MyDashboard() {
+export default function MyDashboard({ onSectionChange }) {
     return (
         <>
             <div className="rounded-md bg-white p-6 shadow-md">
@@ -12,25 +12,35 @@ export default function MyDashboard() {
                     <div className="rounded-md bg-gray-200 p-4">
                         <h3 className="mb-2 font-semibold">Manage Listing</h3>
                         <ul className="space-y-2">
-                            <li>
-                                <button className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white">
-                                    Basic Information
-                                </button>
+                            <li
+                                className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white"
+                                onClick={() => onSectionChange('mydashboard')}
+                            >
+                                My Dashboard
                             </li>
-                            <li>
-                                <button className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white">
-                                    Profile Photo
-                                </button>
+                            <li
+                                className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white"
+                                onClick={() => onSectionChange('addListing')}
+                            >
+                                Add Listing
                             </li>
-                            <li>
-                                <button className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white">
-                                    Additional Details
-                                </button>
+                            <li
+                                className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white"
+                                onClick={() => onSectionChange('manageListing')}
+                            >
+                                Manage Listing
                             </li>
-                            <li>
-                                <button className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white">
-                                    About Me
-                                </button>
+                            <li
+                                className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white"
+                                onClick={() => onSectionChange('manageLeads')}
+                            >
+                                Manage Leads
+                            </li>
+                            <li
+                                className="w-full rounded-md bg-yellow-500 px-4 py-2 text-left text-white"
+                                onClick={() => onSectionChange('stats')}
+                            >
+                                Stats
                             </li>
                         </ul>
                     </div>

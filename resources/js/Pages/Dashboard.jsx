@@ -52,7 +52,9 @@ export default function Dashboard({ user, listings, stat = [] }) {
                     {currentSection === 'manageLeads' && (
                         <ManageLeads listings={listings} />
                     )}
-                    {currentSection === 'mydashboard' && <MyDashboard />}
+                    {currentSection === 'mydashboard' && (
+                        <MyDashboard onSectionChange={handleSectionChange} />
+                    )}
                     {currentSection === 'stats' && <Stats Stats={stat} />}
                 </div>
             </div>

@@ -134,7 +134,7 @@ export default function SideDetail({
                     <select
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
-                        className="w-fill rounded border px-4 py-2 text-lg"
+                        className="w-fill rounded border px-8 py-4 text-lg"
                     >
                         <option value="all">All</option>
                         <option value="bought">Bought</option>

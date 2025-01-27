@@ -18,7 +18,7 @@ class ListingsController extends Controller
             'Franchise_location' => 'required|string|max:255',
             'Franchise_price' => 'required|string|max:255',
             'Franchise_description' => 'required|string',
-            'Franchise_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'Franchise_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
             'Franchise_contact' => 'required|string|max:255',
             'Franchise_email' => 'required|email|max:255',
             'Franchise_phone' => 'required|string|max:255',

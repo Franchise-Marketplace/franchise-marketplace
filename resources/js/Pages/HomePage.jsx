@@ -4,8 +4,20 @@ import Header from '@/Layouts/Header';
 import Hero from '@/Layouts/Hero';
 import Nav from '@/Layouts/Nav';
 import ContactUs from '@/Layouts/contact';
+import { useState } from 'react';
 
 export default function HomePage({ showResults = [], listings = [] }) {
+    const [selectedListing, setSelectedListing] = useState(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const handleViewListing = (listing) => {
+        setSelectedListing(listing);
+        setIsPopupOpen(true);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupOpen(false);
+    };
     return (
         <>
             <Header />
@@ -19,34 +31,85 @@ export default function HomePage({ showResults = [], listings = [] }) {
                 <div className="latest_franchise_contianer mb-8 flex flex-wrap justify-evenly">
                     {listings.map((listing) => {
                         return (
-                            <>
-                                <div className="lists mb-12 flex flex-col rounded p-8 shadow-xl">
-                                    <div className="franhcise_box flex gap-5">
-                                        <img
-                                            src={
-                                                'storage/' +
-                                                listing.Franchise_image
+                            <div
+                                className="lists mb-12 flex flex-col rounded p-8 shadow-xl"
+                                key={listing.id}
+                            >
+                                <div className="franchise_box flex gap-5">
+                                    <img
+                                        src={
+                                            'storage/' + listing.Franchise_image
+                                        }
+                                        alt={listing.Franchise_name}
+                                        className="h-36 w-36 pt-2"
+                                    />
+                                    <div className="franchise_description_and_button flex flex-col gap-2">
+                                        <h2 className="mb-2 text-xl font-bold">
+                                            {listing.Franchise_name}
+                                        </h2>
+                                        <p className="w-44 text-sm">
+                                            {listing.Franchise_description}
+                                        </p>
+                                        <button
+                                            onClick={() =>
+                                                handleViewListing(listing)
                                             }
-                                            alt=""
-                                            className="h-36 w-36 pt-2"
-                                        />
-                                        <div className="franchise_description_and_button flex flex-col gap-2">
-                                            <h2 className="mb-2 text-xl font-bold">
-                                                {listing.Franchise_name}
-                                            </h2>
-                                            <p className="w-44 text-sm">
-                                                {listing.Franchise_description}
-                                            </p>
-                                            <button className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-700">
-                                                View Listing
-                                            </button>
-                                        </div>
+                                            className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-700"
+                                        >
+                                            View Listing
+                                        </button>
                                     </div>
                                 </div>
-                            </>
+                            </div>
                         );
                     })}
                 </div>
+
+                {/* Popup Modal */}
+                {isPopupOpen && selectedListing && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                        <div className="justify-inbetween w-96 rounded-lg bg-white p-8">
+                            <div className="mb-4 flex items-center justify-between">
+                                <h2 className="text-2xl font-bold">
+                                    {selectedListing.Franchise_name}
+                                </h2>
+                                <button
+                                    onClick={handleClosePopup}
+                                    className="text-xl font-semibold text-gray-600 hover:text-gray-900"
+                                >
+                                    X
+                                </button>
+                            </div>
+
+                            <img
+                                src={
+                                    'storage/' + selectedListing.Franchise_image
+                                }
+                                alt={selectedListing.Franchise_name}
+                                className="mt-4 h-48 w-full rounded object-cover"
+                            />
+                            <p className="mt-4 text-lg">
+                                {selectedListing.Franchise_description}
+                            </p>
+                            <p className="mt-2 text-lg font-semibold">
+                                Price: {selectedListing.Franchise_price}
+                            </p>
+                            <p className="mt-2 text-lg">
+                                Location: {selectedListing.Franchise_location}
+                            </p>
+                            <p className="mt-2 text-lg">
+                                Contact: {selectedListing.Franchise_contact}
+                            </p>
+                            <p className="mt-2 text-lg">
+                                Email: {selectedListing.Franchise_email}
+                            </p>
+                            <p className="mt-2 text-lg">
+                                Phone: {selectedListing.Franchise_phone}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
                 <h2
                     className="mb-2 text-center text-4xl font-semibold"
                     id="category"

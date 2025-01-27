@@ -13,13 +13,6 @@ export default function Hero({ showResults = [] }) {
         Franchise_price: '',
     });
 
-    // useEffect(() => {
-    //     window.scrollTo({
-    //         top: 700,
-    //         behavior: 'smooth',
-    //     });
-    // }, [showResults]);
-
     const handleSearch = () => {
         console.log(data);
 

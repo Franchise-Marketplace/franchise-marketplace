@@ -11,6 +11,8 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\StatController;
+use App\Http\Controllers\FranchiseRequestController;
+
 
 Route::resource('listings', 'ListingsController');
 
@@ -110,6 +112,9 @@ Route::post('/search', function (Request $request) {
 
 Route::get('/listings-search', [ListingsController::class, 'search'])->name('listings.search');
 
+Route::post('/submit-request', [FranchiseRequestController::class, 'store']);
+
+
 Route::middleware('auth')->group(function () {
         // Handles both interest and buy actions with dynamic methods.
         Route::post('/franchisee/{action}', [TransactionController::class, 'store'])->middleware('auth')->name('TransactionController.store');
@@ -128,7 +133,10 @@ Route::middleware('auth')->group(function () {
     
 
 Route::get("/", function (){
-    return Inertia::render('HomePage');
+    $listings = Listing::latest()->take(10)->get();
+    return Inertia::render('HomePage',[
+        "listings" => $listings,
+    ]);
 })->name('home');
 
 Route::middleware('auth')->group(function () {

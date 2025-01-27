@@ -17,10 +17,6 @@ export default function Header() {
                     />
                 </Link>
                 <div className="header_buttons flex gap-x-6">
-                    <button className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                        News & Advice
-                    </button>
-
                     {!user ? (
                         <>
                             <Link
